@@ -15,11 +15,9 @@ const userRole = {
 const userRoles = [userRole.admin, userRole.user];
 
 const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
   name: { type: String, required: true, unique: true },
-  role: { type: String, enum: userRoles, default: userRole.admin, required: false },
-  active: { type: Boolean, default: true, required: false },
-  isAdmin: { type: Boolean, default: true, required: false }
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true,unique: true  },
 }, {
   collection: 'user'
 });
@@ -74,6 +72,6 @@ export default {
   get: get,
   removeById: removeById,
 
-  userRole: userRole,
+  //userRole: userRole,
   model: UserModel
 };

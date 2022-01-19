@@ -27,6 +27,7 @@ mongoose.connect(config.databaseUrl, {
   }
   else {
     console.info('Connect with database established');
+
   }
 });
 
