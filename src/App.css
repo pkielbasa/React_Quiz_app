@@ -36,3 +36,63 @@
     transform: rotate(360deg);
   }
 }
+#homePageBackground {
+  background-color: #F7F7F7;
+  background-size: cover;
+  background-image: url('./images/background.jpg');
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+#homePageContent {
+  margin-top: 10%;
+  height: 60vh;
+}
+#categoryBackground {
+  background-color: #F7F7F7;
+  background-size: cover;
+  background-image: url('./images/background.jpg');
+  width: 100vw;
+  height: 100vh;
+  display: inline-flex;
+  justify-content: center;
+}
+#categoryContent {
+  margin-top: 2%;
+  height: 60vh;
+  justify-content: center;
+}
+#categoriesMap {
+  margin-top: 2%;
+  height: 60vh;
+  width: 100vw;
+  scroll-behavior: smooth;
+  overflow: auto;
+  justify-content: center;
+}
+
+
+.homePageButton {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  margin-bottom: 100px;
+}
+
+.homePageButton:hover {background-color: #3e8e41}
+
+.homePageButton:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
