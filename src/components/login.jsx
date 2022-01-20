@@ -1,28 +1,65 @@
-import React from 'react';
-import {useNavigate} from "react-router-dom";
-import '../App.css'
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import axios from "axios";
+
 const Login = () => {
 
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+
     const navigate = useNavigate();
-    const loginUser = () => {
+
+    const HandleChangeRoute = () => {
         navigate('/')
-    };
-    const registerUser = () => {
-        navigate('/register')
+        window.location.reload();
     };
 
+
+
+    const Validate = (event) => {
+        event.preventDefault();
+        axios({
+            method: 'post',
+            url: 'http://localhost:3001/api/user/auth',
+            data: {
+                email: email,
+                password: password,
+            }
+        }).then((response) => {
+            localStorage.setItem('token', response.data.token);
+            HandleChangeRoute();
+        }).catch((error) => {
+            alert("Podany email lub login są błędne!")
+            console.log(error);
+        });
+        ;
+    };
     return (
-        <div id="homePageBackground">
-            <div id="homePageContent">
-                <div>
-                    <button className="homePageButton" onClick={loginUser}>Zaloguj się</button>
-                </div>
-                <div>
-                    <button className="homePageButton" onClick={registerUser}>Zarejestruj się</button>
-                </div>
+        <div id="signUpBackground">
+            <div id="signinForm">
+            </div>
+            <div id="signForm">
+                <form id="formSign" onSubmit={Validate}>
+                    <input className="formInput" placeholder="First Name" size="lg"
+                           onChange={e => setEmail(e.target.value)}/><br />
+                    <input id="password1"
+                           pr="4.5rem"
+                           type={"password"}
+                           placeholder="Password"
+                           onChange={e => setPassword(e.target.value)}
+                    />
+
+                    <br/>
+                    <button id="createAccountButton" type="submit" colorScheme="blue">Zaloguj!</button>&nbsp;&nbsp;
+                </form>
             </div>
         </div>
-    );
+
+    )
 }
+
 
 export default Login;

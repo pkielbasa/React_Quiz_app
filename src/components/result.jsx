@@ -10,12 +10,15 @@ const Result = () => {
     const goToHome = () => {
         navigate('/')
     };
+    const goToRegister = () => {
+        navigate('/register')
+    };
 
     return (
         <div id="homePageBackground">
             <div id="homePageContent">
                 <div>
-                    <button className="homePageButton" onClick={goToHome}>Zarejestruj się</button>
+                    <button className="homePageButton" onClick={goToRegister}>Zarejestruj się</button>
                 </div>
             </div>
         </div>
