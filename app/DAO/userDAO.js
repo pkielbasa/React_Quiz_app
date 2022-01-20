@@ -17,7 +17,9 @@ const userRoles = [userRole.admin, userRole.user];
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true,unique: true  },
+  role: { type: String, enum: userRoles, default: userRole.admin, required: false },
+  active: { type: Boolean, default: true, required: false },
+  isAdmin: { type: Boolean, default: true, required: false }
 }, {
   collection: 'user'
 });
@@ -28,7 +30,7 @@ const UserModel = mongoose.model('user', userSchema);
 
 function createNewOrUpdate(user) {
   return Promise.resolve().then(() => {
-    if (!user.id) {
+    if (!user.id && findByEmailOrNickname(user.email, user.nickname)) {
       return new UserModel(user).save().then(result => {
         if (result) {
           return mongoConverter(result);
@@ -47,11 +49,20 @@ function createNewOrUpdate(user) {
 }
 
 async function getByEmailOrName(name) {
-  const result = await UserModel.findOne({ $or: [{ email: name }, { name: name }] });
+  const result = await UserModel.findOne({$or: [{email: name}, {name: name}]});
   if (result) {
     return mongoConverter(result);
   }
   throw applicationException.new(applicationException.NOT_FOUND, 'User not found');
+}
+async function findByEmailOrNickname(email,nickname) {
+  const result = await UserModel.findOne({$or: [{email: email}, {nickname: nickname}]});
+  if (result) {
+    return true;
+  }else{
+    console.log("User with that email or nickname already exists!")
+    return false;
+  }
 }
 
 async function get(id) {
@@ -69,9 +80,10 @@ async function removeById(id) {
 export default {
   createNewOrUpdate: createNewOrUpdate,
   getByEmailOrName: getByEmailOrName,
+  findByEmailOrNickname: findByEmailOrNickname,
   get: get,
   removeById: removeById,
 
-  //userRole: userRole,
+  userRole: userRole,
   model: UserModel
 };

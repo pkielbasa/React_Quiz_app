@@ -28,8 +28,8 @@ async function create(user) {
     userId: user.id,
     name: user.name,
     email: user.email,
-   // role: user.role,
-  //  isAdmin: user.isAdmin,
+    role: user.role,
+   isAdmin: user.isAdmin,
     access: access
   };
   const value = jwt.sign(
